@@ -14,7 +14,6 @@ function latinizer(word) {
     var firstVowelIndex = vowelIndexer(word);
     var pigWord = word/slice(firstVowelIndex) + word.slice(0, firstVowelIndex) + 'ay';
   }
-  return pigWord;
   else {
     var firstVowelIndex = vowelIndexer(word);
     var pigWord = word/slice(firstVowelIndex + 1) + word.slice(0, firstVowelIndex + 1) + 'ay';
@@ -30,4 +29,25 @@ function vowelIndexer(string) {
   }
 }
 
-function toPigLatin
+function toPigLatin(sentence) {
+  var sentenceArray = sentence.split(' ');
+  var pigSentenceArray = sentenceArray.map(function(word) {
+    return latinizer(word);
+  });
+  var pigSentence = pigSentenceArray.join(' ');
+  return pigSentence;
+}
+
+
+
+// User interface Logic
+$(document).ready(function() {
+  $('#entry').submit(function(event) {
+    event.preventDefault();
+
+    $('div#output').show();
+    var userSentence = $('input#userSentence').val();
+    var pigLatinSentence = toPigLatin(userSentence);
+    $('p#sentence').text(pigLatinSentence);
+  });
+});
